@@ -22,8 +22,17 @@ bin/rails demo
 
 The `demo` task will do the following:
 * Drop the database by running `prep:reset`
-* Create, migrate, drop the `schema_migrations` table, and insert some dummy
-  data via `prep:setup`
+* Create, migrate, drop the `schema_migrations` table (and
+  `ar_internal_metadata` to make it more like a DB that came from a non-Rails
+  project), and insert some dummy data via `prep:setup`
 * Show the dummy data via `data:show`
 * Run `db:migrate`, which truncates the data
 * Shows the now deleted data via `data:show`
+
+I have created a temporary fix via [a monkeypatch](lib/database_tasks_monkeypatch.rb).
+You can run the demo with the fix applied using the `APPLY_FIX=true` environment
+variable:
+
+```
+APPLY_FIX=true bin/rails demo
+```
